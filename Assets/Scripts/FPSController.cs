@@ -10,20 +10,36 @@ public class FPSController : MonoBehaviour
     //スピード調整用の変数を作成
     float speed = 0.1f;
 
-    //入力に合わせてプレイヤーの位置を変更していく。
+    //変数の宣言
+    public GameObject cam;
+    Quaternion cameraRot, characterRot;
+
+    float Xsensityvity = 3f, Ysensityvity = 3f;
+
+   
+    //カメラの正面方向に進むようにコード記述
 
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        cameraRot = cam.transform.localRotation;
+        characterRot = transform.localRotation;
     }
 
     // Update is called once per frame(毎フレーム）
     void Update()
     {
-        
+        float xRot = Input.GetAxis("Mouse X") * Ysensityvity;
+        float yRot = Input.GetAxis("Mouse Y") * Xsensityvity;
+
+        cameraRot *= Quaternion.Euler(-yRot, 0, 0);
+        characterRot *= Quaternion.Euler(0, xRot, 0);
+
+        cam.transform.localRotation = cameraRot;
+        transform.localRotation = characterRot;
+
     }
 
     //(0.02秒ごと)
@@ -38,8 +54,8 @@ public class FPSController : MonoBehaviour
         z = Input.GetAxisRaw("Vertical") * speed;
         //Vertical=垂直
 
-        transform.position += new Vector3(x,0,z);
-
+        //transform.position += new Vector3(x,0,z);
+        transform.position += cam.transform.forward * z + cam.transform.right * x;
     }
         
 }
