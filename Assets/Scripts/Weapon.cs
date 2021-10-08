@@ -52,7 +52,10 @@ public class Weapon : MonoBehaviour
 
     public void TriggerSE()
     {
-        weapon.clip = triggerSE;
-        weapon.Play();
+        if (!weapon.isPlaying)
+        {
+            weapon.clip = triggerSE;
+            weapon.Play();
+        }
     }
 }
