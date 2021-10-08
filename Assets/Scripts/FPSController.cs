@@ -32,6 +32,12 @@ public class FPSController : MonoBehaviour
 
     public GameObject mainCamera, subCamera;
 
+    public AudioSource playerFootStep;
+    public AudioClip WalkFootStepSE,RunFootStepSE;
+
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -73,7 +79,9 @@ public class FPSController : MonoBehaviour
             }
             else
             {
-                Debug.Log("弾がないよ");
+                // Debug.Log("弾がないよ");
+
+                Weapon.instance.TriggerSE();
             }
         }
 
@@ -100,11 +108,15 @@ public class FPSController : MonoBehaviour
             if(!animator.GetBool("walk"))
             {
                 animator.SetBool("walk", true);
+
+                PlayerWalkFootStep(WalkFootStepSE);
             }
         }
         else if (animator.GetBool("walk"))
         {
             animator.SetBool("walk", false);
+
+            StopFootStep();
         }
 
         if(z>0 && Input.GetKey(KeyCode.LeftShift))
@@ -113,12 +125,16 @@ public class FPSController : MonoBehaviour
             {
                 animator.SetBool("Run", true);
                 speed = 0.25f;
+
+                PlayerRunFootStep(RunFootStepSE);
             }
         }
         else if (animator.GetBool("Run"))
         {
             animator.SetBool("Run", false);
             speed = 0.1f;
+
+            StopFootStep();
         }
 
         if (Input.GetMouseButton(1))
@@ -184,5 +200,36 @@ public class FPSController : MonoBehaviour
         q.x = Mathf.Tan(angleX * Mathf.Deg2Rad * 0.5f);
 
         return q;
+    }
+
+    public void PlayerWalkFootStep(AudioClip clip)
+    {
+        playerFootStep.loop = true;
+
+        playerFootStep.pitch = 1f;
+
+        playerFootStep.clip = clip;
+
+        playerFootStep.Play();
+    }
+
+    public void PlayerRunFootStep(AudioClip clip)
+    {
+        playerFootStep.loop = true;
+
+        playerFootStep.pitch = 1.3f;
+
+        playerFootStep.clip = clip;
+
+        playerFootStep.Play();
+    }
+
+    public void StopFootStep()
+    {
+        playerFootStep.Stop();
+
+        playerFootStep.loop = false;
+
+        playerFootStep.pitch = 1f;
     }
 }
