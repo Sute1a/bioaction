@@ -30,6 +30,8 @@ public class FPSController : MonoBehaviour
     public Slider hpBer;
     public Text ammoText;
 
+    public GameObject mainCamera, subCamera;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -117,6 +119,17 @@ public class FPSController : MonoBehaviour
         {
             animator.SetBool("Run", false);
             speed = 0.1f;
+        }
+
+        if (Input.GetMouseButton(1))
+        {
+            subCamera.SetActive(true);
+            mainCamera.GetComponent<Camera>().enabled = false;
+        }
+        else if (subCamera.activeSelf)
+        {
+            subCamera.SetActive(false);
+            mainCamera.GetComponent<Camera>().enabled = true;
         }
 
     }
