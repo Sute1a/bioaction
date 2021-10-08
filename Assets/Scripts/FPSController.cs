@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FPSController : MonoBehaviour
 {
@@ -21,14 +22,24 @@ public class FPSController : MonoBehaviour
 
     float minX = -90f, maxX = 90f;
 
-    
+    public Animator animator;
 
+    int ammunition = 50, maxAmmunition = 50, ammoClip = 10, maxAmmoClip = 10;
+
+    int plyayerHP = 100, maxPlayerHP = 100;
+    public Slider hpBer;
+    public Text ammoText;
 
     // Start is called before the first frame update
     void Start()
     {
         cameraRot = cam.transform.localRotation;
         characterRot = transform.localRotation;
+
+        GameState.canShoot = true;
+
+        hpBer.value = plyayerHP;
+        ammoText.text = ammoClip + "/" + ammunition;
     }
 
     // Update is called once per frame(毎フレーム）
@@ -46,6 +57,68 @@ public class FPSController : MonoBehaviour
         transform.localRotation = characterRot;
 
         UpdateCursorLock();
+
+        if (Input.GetMouseButton(0) && GameState.canShoot)
+        {
+            if (ammoClip > 0)
+            {
+
+                animator.SetTrigger("Fire");
+                GameState.canShoot = false;
+
+                ammoClip--;
+                ammoText.text = ammoClip + "/" + ammunition;
+            }
+            else
+            {
+                Debug.Log("弾がないよ");
+            }
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            int amountNeed = maxAmmoClip - ammoClip;
+            int ammouAvailble = amountNeed < ammunition ? amountNeed : ammunition;
+
+            if (amountNeed != 0 && ammunition!=0)
+            {
+                animator.SetTrigger("Reload");
+
+                ammunition -= ammouAvailble;
+                ammoClip += ammouAvailble;
+                ammoText.text = ammoClip + "/" + ammunition;
+            }
+
+            
+        }
+
+        if (Mathf.Abs(x)>0||Mathf.Abs(z)>0)
+        {
+            if(!animator.GetBool("walk"))
+            {
+                animator.SetBool("walk", true);
+            }
+        }
+        else if (animator.GetBool("walk"))
+        {
+            animator.SetBool("walk", false);
+        }
+
+        if(z>0 && Input.GetKey(KeyCode.LeftShift))
+        {
+            if (!animator.GetBool("Run"))
+            {
+                animator.SetBool("Run", true);
+                speed = 0.25f;
+            }
+        }
+        else if (animator.GetBool("Run"))
+        {
+            animator.SetBool("Run", false);
+            speed = 0.1f;
+        }
+
     }
 
     //(0.02秒ごと)
