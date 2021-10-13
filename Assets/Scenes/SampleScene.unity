@@ -131,6 +131,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1530805497643727530, guid: 3265447ad40ea4b37be8adc7482dab82, type: 3}
+      propertyPath: runSpaaed
+      value: 1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1530805497643727530, guid: 3265447ad40ea4b37be8adc7482dab82, type: 3}
+      propertyPath: walkingSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1530805497643727530, guid: 3265447ad40ea4b37be8adc7482dab82, type: 3}
       propertyPath: wwalkingSpeed
       value: 1
       objectReference: {fileID: 0}
@@ -359,6 +367,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7903719322194624936, guid: 8021acd02bb4c4287a39ae1858d46e65, type: 3}
+      propertyPath: runSpaaed
+      value: 1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7903719322194624936, guid: 8021acd02bb4c4287a39ae1858d46e65, type: 3}
+      propertyPath: walkingSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7903719322194624936, guid: 8021acd02bb4c4287a39ae1858d46e65, type: 3}
       propertyPath: wwalkingSpeed
       value: 1
       objectReference: {fileID: 0}
@@ -400,8 +416,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -0.0000019073486, y: 13.231102}
-  m_SizeDelta: {x: 242.5839, y: 26.462204}
+  m_AnchoredPosition: {x: -16.7, y: 11.5011}
+  m_SizeDelta: {x: 173.383, y: 23.0022}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &514147312
 MonoBehaviour:
@@ -518,7 +534,7 @@ GameObject:
   - component: {fileID: 745674315}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1039,8 +1055,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -88.854004, y: 20.115692}
-  m_SizeDelta: {x: 177.71, y: 40.2313}
+  m_AnchoredPosition: {x: -29.4566, y: 11.501}
+  m_SizeDelta: {x: 58.9151, y: 23.002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1402506617
 MonoBehaviour:

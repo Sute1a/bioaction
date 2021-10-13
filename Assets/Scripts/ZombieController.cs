@@ -9,16 +9,24 @@ public class ZombieController : MonoBehaviour
     Animator animator;
     NavMeshAgent agent;
 
-    public float wwalkingSpeed;
+    public float walkingSpeed;
 
-    enum STATE { IDLE, WANDER, ATTACK, CHANSE, DEAD };
+    enum STATE { IDLE, WANDER, ATTACK, CHASE, DEAD };
     STATE state = STATE.IDLE;
+
+    GameObject target;
+    public float runSpaaed;
 
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
+
+        if (target == null)
+        {
+            target = GameObject.FindGameObjectWithTag("Player");
+        }
     }
 
 
@@ -30,6 +38,30 @@ public class ZombieController : MonoBehaviour
         animator.SetBool("Attack", false);
     }
 
+
+    float DistanceToPlayer()
+    {
+        return Vector3.Distance(target.transform.position, transform.position);
+    }
+
+    bool CanSeePlayer()
+    {
+        if (DistanceToPlayer() < 15)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    bool ForGetPlayer()
+    {
+        if (DistanceToPlayer() > 20)
+        {
+            return true;
+        }
+        return false;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -38,10 +70,17 @@ public class ZombieController : MonoBehaviour
             case STATE.IDLE:
                 TurnOffTrigger();
 
-                if (Random.Range(0, 5000) < 5)
+                if (CanSeePlayer())
+                {
+                    state = STATE.CHASE;
+                }
+
+                else if (Random.Range(0, 5000) < 5)
                 {
                     state = STATE.WANDER;
                 }
+
+
                 break;
 
             case STATE.WANDER:
@@ -57,15 +96,42 @@ public class ZombieController : MonoBehaviour
 
                     TurnOffTrigger();
 
-                    agent.speed = wwalkingSpeed;
+                    agent.speed = walkingSpeed;
                     animator.SetBool("Walk", true);
                 }
 
+                
                 if (Random.Range(0, 5000) < 5)
                 {
                     state = STATE.IDLE;
                     agent.ResetPath();
                 }
+
+                
+
+                if (CanSeePlayer())
+                {
+                    state = STATE.CHASE;
+                }
+
+                break;
+
+
+            case STATE.CHASE:
+                agent.SetDestination(target.transform.position);
+                agent.stoppingDistance = 3;
+
+                TurnOffTrigger();
+
+                agent.speed = runSpaaed;
+                animator.SetBool("Run",true);
+
+                if (ForGetPlayer())
+                {
+                    agent.ResetPath();
+                    state = STATE.WANDER;
+                }
+
                 break;
         }
     }
