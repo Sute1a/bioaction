@@ -1368,7 +1368,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4273310675282269885, guid: 8021acd02bb4c4287a39ae1858d46e65, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.78
+      value: -10.95
       objectReference: {fileID: 0}
     - target: {fileID: 4273310675282269885, guid: 8021acd02bb4c4287a39ae1858d46e65, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1740,7 +1740,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7903719322194624936, guid: 8021acd02bb4c4287a39ae1858d46e65, type: 3}
       propertyPath: attackDamege
-      value: 1
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7903719322194624936, guid: 8021acd02bb4c4287a39ae1858d46e65, type: 3}
       propertyPath: walkingSpeed
