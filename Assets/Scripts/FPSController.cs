@@ -26,7 +26,7 @@ public class FPSController : MonoBehaviour
 
     int ammunition = 50, maxAmmunition = 50, ammoClip = 10, maxAmmoClip = 10;
 
-    int plyayerHP = 100, maxPlayerHP = 100;
+    int playerHP = 100, maxPlayerHP = 100;
     public Slider hpBer;
     public Text ammoText;
 
@@ -46,7 +46,7 @@ public class FPSController : MonoBehaviour
 
         GameState.canShoot = true;
 
-        hpBer.value = plyayerHP;
+        hpBer.value = playerHP;
         ammoText.text = ammoClip + "/" + ammunition;
     }
 
@@ -231,5 +231,17 @@ public class FPSController : MonoBehaviour
         playerFootStep.loop = false;
 
         playerFootStep.pitch = 1f;
+    }
+
+    public void TakeHit(float damage)
+    {
+        playerHP = (int)Mathf.Clamp(playerHP - damage, 0, playerHP);
+
+        hpBer.value = playerHP;
+
+        if(playerHP<=0 && !GameState.GameOver)
+        {
+            GameState.GameOver = true;
+        }
     }
 }

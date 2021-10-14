@@ -5,4 +5,6 @@ using UnityEngine;
 public class GameState : MonoBehaviour
 {
     public static bool canShoot;
+
+    public static bool GameOver = false;
 }
