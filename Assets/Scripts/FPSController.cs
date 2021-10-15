@@ -35,6 +35,9 @@ public class FPSController : MonoBehaviour
     public AudioSource playerFootStep;
     public AudioClip WalkFootStepSE,RunFootStepSE;
 
+    public AudioSource voice, impact;
+    public AudioClip hitVoiceSE, HitImpactSE;
+
 
 
 
@@ -239,9 +242,30 @@ public class FPSController : MonoBehaviour
 
         hpBer.value = playerHP;
 
+        ImpactSE();
+
+        if (Random.Range(0,10)<6)
+        {
+            VoiceSE(hitVoiceSE);
+        }
+
         if(playerHP<=0 && !GameState.GameOver)
         {
             GameState.GameOver = true;
         }
+    }
+
+    public void VoiceSE(AudioClip clip)
+    {
+        voice.Stop();
+
+        voice.clip = clip;
+        voice.Play();
+    }
+
+    public void ImpactSE()
+    {
+        voice.clip = HitImpactSE;
+        voice.Play();
     }
 }

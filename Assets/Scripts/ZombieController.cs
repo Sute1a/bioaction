@@ -21,6 +21,11 @@ public class ZombieController : MonoBehaviour
 
     public GameObject ragdoll;
 
+    public AudioSource zomVoice;
+    public AudioClip howl, attack;
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +36,8 @@ public class ZombieController : MonoBehaviour
         {
             target = GameObject.FindGameObjectWithTag("Player");
         }
+
+        Howl();
     }
 
 
@@ -74,6 +81,7 @@ public class ZombieController : MonoBehaviour
     {
         if (target != null)
         {
+            AttackSE();
             target.GetComponent<FPSController>().TakeHit(attackDamege);
         }
     }
@@ -83,6 +91,21 @@ public class ZombieController : MonoBehaviour
         TurnOffTrigger();
         animator.SetBool("Death", true);
         state = STATE.DEAD;
+    }
+
+    public void Howl()
+    {
+        if (zomVoice.isPlaying)
+        {
+            zomVoice.clip = howl;
+            zomVoice.Play();
+        }
+    }
+
+    public void AttackSE()
+    {
+        zomVoice.clip = attack;
+        zomVoice.Play();
     }
 
     // Update is called once per frame
@@ -103,6 +126,10 @@ public class ZombieController : MonoBehaviour
                     state = STATE.WANDER;
                 }
 
+                if (Random.Range(0,5000)<5)
+                {
+                    Howl();
+                }
 
                 break;
 
@@ -135,6 +162,11 @@ public class ZombieController : MonoBehaviour
                 if (CanSeePlayer())
                 {
                     state = STATE.CHASE;
+                }
+
+                if (Random.Range(0, 5000) < 5)
+                {
+                    Howl();
                 }
 
                 break;
@@ -194,10 +226,14 @@ public class ZombieController : MonoBehaviour
                 if (DistanceToPlayer() > agent.stoppingDistance + 2)
                 {
                     state = STATE.CHASE;
+                    Howl();
                 }
+
                 break;
 
             case STATE.DEAD:
+
+                zomVoice.Stop();
 
                 Destroy(agent);
 
