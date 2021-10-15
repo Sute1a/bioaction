@@ -76,6 +76,13 @@ public class ZombieController : MonoBehaviour
         }
     }
 
+    public void ZombieDeath()
+    {
+        TurnOffTrigger();
+        animator.SetBool("Death", true);
+        state = STATE.DEAD;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -186,6 +193,12 @@ public class ZombieController : MonoBehaviour
                 {
                     state = STATE.CHASE;
                 }
+                break;
+
+            case STATE.DEAD:
+
+                Destroy(agent);
+
                 break;
         }
     }

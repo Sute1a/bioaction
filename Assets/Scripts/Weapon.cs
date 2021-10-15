@@ -11,6 +11,8 @@ public class Weapon : MonoBehaviour
 
     public static Weapon instance;
 
+    public Transform shotDirection;
+
     private void Awake()
     {
         if (instance == null)
@@ -29,7 +31,7 @@ public class Weapon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Debug.DrawRay(shotDirection.position, shotDirection.transform.forward * 10, Color.green);
     }
 
     public void CanShoot()
@@ -56,6 +58,21 @@ public class Weapon : MonoBehaviour
         {
             weapon.clip = triggerSE;
             weapon.Play();
+        }
+    }
+
+    public void Shooting()
+    {
+        RaycastHit hitInfo;
+
+        if(Physics.Raycast(shotDirection.transform.position,transform.forward,out hitInfo, 300))
+        {
+            if(hitInfo.collider.gameObject.GetComponent<ZombieController>() != null)
+            {
+                ZombieController hitZombie = hitInfo.collider.gameObject.GetComponent<ZombieController>();
+
+                hitZombie.ZombieDeath();
+            }
         }
     }
 }
