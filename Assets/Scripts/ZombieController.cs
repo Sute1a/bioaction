@@ -19,6 +19,8 @@ public class ZombieController : MonoBehaviour
 
     public int attackDamege;
 
+    public GameObject ragdoll;
+
     // Start is called before the first frame update
     void Start()
     {

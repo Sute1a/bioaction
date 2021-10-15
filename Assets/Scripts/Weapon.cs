@@ -67,11 +67,30 @@ public class Weapon : MonoBehaviour
 
         if(Physics.Raycast(shotDirection.transform.position,transform.forward,out hitInfo, 300))
         {
+
+            GameObject hitGameobject = hitInfo.collider.gameObject;
+
             if(hitInfo.collider.gameObject.GetComponent<ZombieController>() != null)
             {
                 ZombieController hitZombie = hitInfo.collider.gameObject.GetComponent<ZombieController>();
 
-                hitZombie.ZombieDeath();
+
+                if (Random.Range(0, 10) < 11)
+                {
+                    hitZombie.ZombieDeath();
+
+                    GameObject rdPrefab = hitZombie.ragdoll;
+
+                    GameObject NewRD = Instantiate(rdPrefab, hitGameobject.transform.position, hitGameobject.transform.rotation);
+
+                    NewRD.transform.Find("Hips").GetComponent<Rigidbody>().AddForce(shotDirection.transform.forward * 1000);
+
+                    Destroy(hitGameobject);
+                }
+                else
+                {
+                    hitZombie.ZombieDeath();
+                }
             }
         }
     }
