@@ -31,7 +31,7 @@ public class Weapon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.DrawRay(shotDirection.position, shotDirection.transform.forward * 10, Color.green);
+        //Debug.DrawRay(shotDirection.position, shotDirection.transform.forward * 10, Color.green);
     }
 
     public void CanShoot()
