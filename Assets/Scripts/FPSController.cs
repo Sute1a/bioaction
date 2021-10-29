@@ -122,7 +122,7 @@ public class FPSController : MonoBehaviour
             StopFootStep();
         }
 
-        if(z>0 && Input.GetKey(KeyCode.LeftShift))
+        if(z>0 && Input.GetKey(KeyCode.RightShift))
         {
             if (!animator.GetBool("Run"))
             {

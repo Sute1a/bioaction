@@ -13,6 +13,8 @@ public class Weapon : MonoBehaviour
 
     public Transform shotDirection;
 
+    public float shotRange;
+
     private void Awake()
     {
         if (instance == null)
@@ -31,7 +33,7 @@ public class Weapon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Debug.DrawRay(shotDirection.position, shotDirection.transform.forward * 10, Color.green);
+        Debug.DrawRay(shotDirection.position, shotDirection.transform.forward * 10, Color.green);
     }
 
     public void CanShoot()
@@ -65,12 +67,15 @@ public class Weapon : MonoBehaviour
     {
         RaycastHit hitInfo;
 
-        if(Physics.Raycast(shotDirection.transform.position,transform.forward,out hitInfo, 300))
+        if(Physics.Raycast(shotDirection.transform.position,transform.forward,out hitInfo, shotRange))
         {
+            
 
             GameObject hitGameobject = hitInfo.collider.gameObject;
 
-            if(hitInfo.collider.gameObject.GetComponent<ZombieController>() != null)
+            Debug.Log(hitGameobject.name);
+
+            if (hitInfo.collider.gameObject.GetComponent<ZombieController>() != null)
             {
                 ZombieController hitZombie = hitInfo.collider.gameObject.GetComponent<ZombieController>();
 
